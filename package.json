@@ -1,6 +1,6 @@
 {
   "name": "polym",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A module to create a Polymer component from the template",
   "main": "main.js",
   "scripts": {

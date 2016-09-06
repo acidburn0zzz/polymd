@@ -1,0 +1,22 @@
+{
+  "name": "polym",
+  "version": "1.0.0",
+  "description": "A module to create a Polymer component from the template",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Polymer",
+    "web-components"
+  ],
+  "authors": [
+    "Pawel Psztyc <pawel.psztyc@mulesoft.com>",
+    "The Advanced REST Client team"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rest-client/polym.git"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "polym",
+  "name": "polymd",
   "version": "1.0.2",
   "description": "A module to create a Polymer component from the template",
   "main": "main.js",
@@ -18,7 +18,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/advanced-rest-client/polym.git"
+    "url": "git://github.com/advanced-rest-client/polymd.git"
   },
   "devDependencies": {
     "conventional-github-releaser": "^1.1.1",

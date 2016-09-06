@@ -1,5 +1,5 @@
-# polym
-The `polym` (polymer-module) is a module to easily create a Polymer web component element from the template.
+# polymd
+The `polymd` (polymer-module) is a module to easily create a Polymer web component element from the template.
 
 It will create the following structure:
 ```
@@ -49,13 +49,13 @@ It will create the following structure:
 
 ## Install
 ```shell
-sudo npm install polym -g
+sudo npm install polymd -g
 ```
 It's better to install it as a global command since it doesn't have interface to include it into another node nodule.
 
 ## Usage
 ```shell
-polym MODULE-NAME [ --description "the description"] [--author "the author"] [--version "1.0.0"] [--repository "my-org"] [--skip-tests] [--skip-demo]
+polymd MODULE-NAME [ --description "the description"] [--author "the author"] [--version "1.0.0"] [--repository "my-org"] [--skip-tests] [--skip-demo]
 ```
 
 #### MODULE-NAME
@@ -65,8 +65,8 @@ The name of the web component. It must be consisted with alphanumeric characters
 | Option | Shortcut | Description |
 | --- | --- | --- |
 | `--description` | `-d` | Short description for the component used in bower and in the package file |
-| `--author` | `-a` | Author of the component. You can set up the `POLYM_AUTHOR` env variable to automatically insert it into this field. If not, the `USER` variable will be used (if present). |
+| `--author` | `-a` | Author of the component. You can set up the `POLYMD_AUTHOR` env variable to automatically insert it into this field. If not, the `USER` variable will be used (if present). |
 | `--version` | `-v` | Version of the component. Use semantic version standard. |
-| `--repository` | `-r` | The repository of the element. It should be only a user or organization name and component name will be appended. Use the `POLYM_REPO` env variable to automate this. |
+| `--repository` | `-r` | The repository of the element. It should be only a user or organization name and component name will be appended. Use the `POLYMD_REPO` env variable to automate this. |
 | `--skip-tests` | `-st` | Skip creation of the tests cases.
 | `--skip-demo` | `-sd` | Skip creation of the demo page.

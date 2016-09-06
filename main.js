@@ -2,15 +2,15 @@
 const path = require('path');
 const fs = require('fs');
 /**
- * The PolyM module is a command line module to create polymer elements from a template.
+ * The PolyMd module is a command line module to create polymer elements from a template.
  * It contains full directory structure with the helper files like .gitignore or .hintrc
  *
  * # Usage
- * polym module-name [--description "the description"]
+ * polymd module-name [--description "the description"]
  *
  * Where `module-name` is a name of the web component.
  */
-class PolyM {
+class PolyMd {
 
   constructor(options) {
     if (options !== undefined) {
@@ -34,15 +34,15 @@ class PolyM {
   }
 
   get author() {
-    return this._author || process.env.POLYM_AUTHOR || process.env.USER || 'Add author here';
+    return this._author || process.env.POLYMD_AUTHOR || process.env.USER || 'Add author here';
   }
 
   get repository() {
     if (this._repository) {
       return this._repository;
     }
-    if (process.env.POLYM_REPO) {
-      return process.env.POLYM_REPO + this.name;
+    if (process.env.POLYMD_REPO) {
+      return process.env.POLYMD_REPO + this.name;
     }
     return 'YOUR-NAME/' + this.name;
   }
@@ -151,7 +151,7 @@ class PolyM {
 
   displayHelp() {
     var m = '\nUsage:\n';
-    m += '  polym <MODULE-NAME>';
+    m += '  polymd <MODULE-NAME>';
     m += ' [--description "the description"]';
     m += ' [--author "the author"]';
     m += ' [--version "1.0.0"]';
@@ -164,13 +164,13 @@ class PolyM {
     m += 'Options:\n';
     m += '  --description, -d\tShort description for the component \n\t\t\t';
     m += 'used in bower and package file\n\n';
-    m += '  --author, -a\t\tAuthor of the component. You can set up the `POLYM_AUTHOR` env \n';
+    m += '  --author, -a\t\tAuthor of the component. You can set up the `POLYMD_AUTHOR` env \n';
     m += '\t\t\tvariable to automatically insert it into this field.\n';
     m += '\t\t\tIf not, the `USER` variable will be used (if present).\n\n';
     m += '  --version, -v\t\tVersion of the component. Use semantic version standard.\n\n';
     m += '  --repository, -r\tThe repository of the element. It should be only a user or \n';
     m += '\t\t\torganization name and component name will be appended.\n';
-    m += '\t\t\tUse the `POLYM_REPO` env variable to automate this.\n\n';
+    m += '\t\t\tUse the `POLYMD_REPO` env variable to automate this.\n\n';
     m += '  --skip-tests, -st\tSkip creation of the tests cases.\n\n';
     m += '  --skip-demo, -sd\tSkip creation of the demo page.\n';
 
@@ -195,6 +195,7 @@ class PolyM {
     this.copy(this.selfPath('templates/helpers'), path.join(this.target, './'));
     // Component's metadata and logic.
     this.copy(this.selfPath('templates/logic'), path.join(this.target, './'));
+    this.copy(this.selfPath('templates/_package.json'), path.join(this.target, './package.json'));
     // Gulp tasks.
     this.copy(this.selfPath('templates/tasks'), path.join(this.target, './tasks'));
     // The Component
@@ -275,4 +276,4 @@ class PolyM {
   }
 }
 
-new PolyM();
+new PolyMd();

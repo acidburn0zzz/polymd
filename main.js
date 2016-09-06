@@ -13,16 +13,12 @@ const fs = require('fs');
 class PolyMd {
 
   constructor(options) {
-    if (options !== undefined) {
-
-    }
-    var result = this.processArgs(process.argv.slice(2));
+    var result = this.processArgs(options);
     if (!result) {
+      this.argumentError = true;
       return;
     }
     this.setTarget();
-    // console.log(process.argv); process.cwd()
-    this.run();
   }
 
   get switchersMap() {
@@ -191,6 +187,9 @@ class PolyMd {
   }
 
   run() {
+    if (!this.target) {
+      throw new Error('Unknown target. Set argument first.');
+    }
     // Copy helper files.
     this.copy(this.selfPath('templates/helpers'), path.join(this.target, './'));
     // Component's metadata and logic.
@@ -275,5 +274,3 @@ class PolyMd {
     fs.writeFileSync(file, txt);
   }
 }
-
-new PolyMd();

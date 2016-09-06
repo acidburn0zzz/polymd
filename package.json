@@ -21,7 +21,7 @@
     "url": "git://github.com/advanced-rest-client/polymd.git"
   },
   "dependencies": {
-    "resolve": "^1.1.7",
+    "commander": "^2.9.0",
     "update-notifier": "^1.0.0"
   },
   "devDependencies": {
@@ -41,6 +41,6 @@
     "run-sequence": "^1.1.5"
   },
   "bin": {
-    "polymer": "bin/molymd.js"
+    "polymd": "bin/polymd.js"
   }
 }

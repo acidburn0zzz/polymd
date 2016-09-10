@@ -170,7 +170,7 @@ class PolyMd {
     this._updateVars(path.join(this.target, './package.json'));
     this._updateVars(path.join(this.target, './README.md'));
     this._updateVars(path.join(this.target, `./${this.name}.html`));
-
+    this._updateVars(path.join(this.target, './index.html'));
     // Test file.
     if (!this.skipTests) {
       this._updateVars(path.join(this.target, './test/basic-test.html'));

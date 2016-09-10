@@ -40,7 +40,7 @@ class PolyMd {
       return `advanced-rest-client/${this.name}`;
     }
     if (this._repository) {
-      return this._repository + this.name;
+      return this._repository + '/' + this.name;
     }
     if (process.env.POLYMD_REPO) {
       return process.env.POLYMD_REPO + this.name;

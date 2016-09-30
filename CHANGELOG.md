@@ -1,3 +1,13 @@
+<a name="1.0.10"></a>
+## [1.0.10](https://github.com/advanced-rest-client/polymd/compare/1.0.9...v1.0.10) (2016-09-30)
+
+
+### Update
+
+* Update dependencies ([8eeab6f37bf5b8e9d290656fd401648dbddb0c5d](https://github.com/advanced-rest-client/polymd/commit/8eeab6f37bf5b8e9d290656fd401648dbddb0c5d))
+
+
+
 <a name="1.0.9"></a>
 ## [1.0.9](https://github.com/advanced-rest-client/polymd/compare/1.0.7...v1.0.9) (2016-09-30)
 

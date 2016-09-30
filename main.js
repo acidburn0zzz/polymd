@@ -1,6 +1,7 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
+const exec = require('child_process').exec;
 /**
  * The PolyMd module is a command line module to create polymer elements from a template.
  * It contains full directory structure with the helper files like .gitignore or .hintrc
@@ -49,8 +50,8 @@ class PolyMd {
   }
 
   processArgs(o) {
-    if (o.skipTests) {
-      this.skipTests = true;
+    if (o.skipTest) {
+      this.skipTest = true;
     }
     if (o.skipDemo) {
       this.skipDemo = true;
@@ -78,6 +79,9 @@ class PolyMd {
 
     if (o.arc) {
       this.isArcComponent = true;
+    }
+    if (o.noDeps) {
+      this.noDeps = true;
     }
   }
 
@@ -113,6 +117,8 @@ class PolyMd {
     if (!this.target) {
       throw new Error('Unknown target. Set argument first.');
     }
+
+    //	OR CC-BY-4.0
     // Copy helper files.
     this.copy(this.selfPath('templates/helpers'), path.join(this.target, './'));
     // Component's metadata and logic.
@@ -124,31 +130,54 @@ class PolyMd {
     this.copy(this.selfPath('templates/component.html'),
       path.join(this.target, `./${this.name}.html`));
     // Test cases.
-    if (!this.skipTests) {
+    if (!this.skipTest) {
       this.copy(this.selfPath('templates/test'), path.join(this.target, './test'));
     }
     // Demo page.
     if (!this.skipDemo) {
       this.copy(this.selfPath('templates/demo'), path.join(this.target, './demo'));
     }
+    if (this.isArcComponent) {
+      this.copy(this.selfPath('templates/license-file-arc.md'),
+        path.join(this.target, './LICENSE.md'));
+    }
     this.updateVariables();
+    this.deps().then(() => this._printEnd()).catch(() => {
+      console.log('Unable to install dependencies.');
+      console.log('Run: \'npm run deps\' manually.');
+      this._printEnd();
+    });
+  }
+
+  _printEnd() {
+    console.log('');
+    console.log('  All set. You can now start development.');
+    console.log('  Try npm run serve to see the component\'s documentation.');
+    console.log('');
   }
 
   copy(src, dest) {
-    var exists = fs.existsSync(src);
-    if (!exists) {
+    // console.log(`Copying file from ${src} to ${dest}`);
+    var stats;
+    try {
+      stats = fs.statSync(src);
+    } catch (e) {
       return false;
     }
-    var stats = fs.statSync(src);
+
     if (stats.isFile()) {
-      if (fs.existsSync(dest)) {
+
+      try {
         let ds = fs.statSync(dest);
         if (ds.isDirectory()) {
           return;
         } else if (ds.isFile()) {
           fs.unlinkSync(dest);
         }
+      } catch (e) {
+
       }
+
       fs.writeFileSync(dest, fs.readFileSync(src));
       return true;
     } else if (stats.isDirectory()) {
@@ -172,12 +201,17 @@ class PolyMd {
     this._updateVars(path.join(this.target, `./${this.name}.html`));
     this._updateVars(path.join(this.target, './index.html'));
     // Test file.
-    if (!this.skipTests) {
+    if (!this.skipTest) {
       this._updateVars(path.join(this.target, './test/basic-test.html'));
     }
     // Demo page.
     if (!this.skipDemo) {
       this._updateVars(path.join(this.target, './demo/index.html'));
+    }
+    if (this.isArcComponent) {
+      let pkg = JSON.parse(fs.readFileSync(path.join(this.target, './package.json'), 'utf8'));
+      pkg.license += ' OR CC-BY-4.0';
+      fs.writeFileSync(path.join(this.target, './package.json'), JSON.stringify(pkg, null, 2));
     }
   }
 
@@ -195,6 +229,25 @@ class PolyMd {
     txt = txt.replace(/ELEMENT-VERSION/gim, version);
     txt = txt.replace(/REPOSITORY-NAME/gim, repository);
     fs.writeFileSync(file, txt);
+  }
+
+  deps() {
+    if (this.noDeps) {
+      return;
+    }
+    var opts = {
+      cwd: this.target
+    };
+    console.log('Instaling dependencies: npm run deps');
+    return new Promise((resolve, reject) => {
+      exec('npm run deps', opts, (err) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+
   }
 }
 exports.PolyMd = PolyMd;

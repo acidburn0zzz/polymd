@@ -1,10 +1,10 @@
 language: node_js
 sudo: required
+dist: trusty
+node_js: stable
 before_script:
 - npm install -g bower polylint web-component-tester
 - bower install
-- polylint
-node_js: stable
 addons:
   firefox: '46.0'
   apt:
@@ -14,5 +14,8 @@ addons:
     - google-chrome-stable
   sauce_connect: true
 script:
+- polylint
 - xvfb-run wct
-dist: trusty
+cache:
+  directories:
+  - bower_components

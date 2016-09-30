@@ -4,7 +4,6 @@
   "description": "A module to create a Polymer component from the template",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "gulp lint"
   },
   "keywords": [

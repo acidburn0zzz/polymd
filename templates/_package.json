@@ -1,7 +1,7 @@
 {
   "name": "ELEMENT-NAME",
   "version": "ELEMENT-VERSION",
-  "license": "LICENSE.md",
+  "license": "Apache-2.0",
   "description": "ELEMENT-DESCRIPTION",
   "devDependencies": {
     "conventional-github-releaser": "^1.1.1",
@@ -31,8 +31,11 @@
   "author": "ELEMENT-AUTHOR",
   "scripts": {
     "lint": "gulp lint",
-    "serve": "polymer serve",
-    "test": "wct"
+    "release": "gulp release",
+    "serve": "node_modules/.bin/polymer serve",
+    "test": "node_modules/.bin/wct",
+    "deps": "npm install --quiet && bower install --quiet",
+    "update-deps": "npm update --quiet && bower update --quiet"
   },
   "repository": {
     "type": "git",

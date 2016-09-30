@@ -23,7 +23,7 @@ gulp.task('github-release', function(done) {
     // change this to your own GitHub token or use an environment variable
     token: process.env.GITHUB_TOKEN
   }, {
-    preset: 'angular' // Or to any other commit message convention you use.
+    preset: 'eslint'
   }, done);
 });
 gulp.task('bump-version', function() {

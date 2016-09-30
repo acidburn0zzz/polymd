@@ -10,7 +10,9 @@ const packageJson = require('../package.json');
 const lib = require('../main.js');
 
 // See https://github.com/yeoman/update-notifier#how for how this works.
-updateNotifier({pkg: packageJson}).notify();
+updateNotifier({
+  pkg: packageJson
+}).notify();
 
 program
   .arguments('<componentName>')
@@ -26,32 +28,42 @@ program
     'variable to automate this.')
   .option('-p, --path <path>', 'Target directory where the element will be created. ' +
     'Current directory by default.')
-  .option('-s, --skip-tests', 'Skip creation of the tests cases.', false)
-  .option('-d, --skip-demos', 'Skip creation of the demo page.', false)
+  .option('-s, --skip-test', 'Skip creation of the tests cases.', false)
+  .option('-d, --skip-demo', 'Skip creation of the demo page.', false)
   .option('--arc', 'Special switch to create a component for Advanced REST Client.', false)
+  .option('-n, --no-deps', 'Do not install dependencies.', false)
   .option('--debug', 'Don\'t use it.', false)
 
-  .action((componentName) => {
-    if (!componentName) {
-      program.outputHelp();
-      return;
-    }
-    let cli;
-    try {
-      // program.path = process.cwd();
-      cli = new lib.PolyMd(componentName, program);
-    } catch (e) {
-      console.error(e.message);
-      program.outputHelp();
-      return;
-    }
-    // console.log(cli.name);
-    // console.log(cli.description);
-    // console.log(cli.author);
-    // console.log(cli.version);
-    // console.log(cli.skipTests);
-    // console.log(cli.skipDemos);
-    // console.log(cli.target);
+.action((componentName) => {
+  if (!componentName) {
+    program.outputHelp();
+    return;
+  }
+
+  try {
+    // program.path = process.cwd();
+    let cli = new lib.PolyMd(componentName, program);
     cli.run();
-  })
-  .parse(process.argv);
+  } catch (e) {
+    console.error(e.message);
+    program.outputHelp();
+    return;
+  }
+
+});
+
+program.on('--help', () => {
+  console.log('  Examples:');
+  console.log('');
+  console.log('    Create ARC\'s component (with predefined values)');
+  console.log('    $ polymd --adc -d "MY new component" new-component');
+  console.log('');
+  console.log('    Create a Polymer component');
+  console.log('    $ polymd -d "Description" -a "Author" -v "0.0.1" component-name');
+  console.log('');
+  console.log('    Just a component without additional files.');
+  console.log('    $ polymd --adc --skip-test --skip-demo new-component');
+  console.log('');
+});
+
+program.parse(process.argv);

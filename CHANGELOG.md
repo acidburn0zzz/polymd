@@ -1,3 +1,13 @@
+<a name="1.0.8"></a>
+## [1.0.8](https://github.com/advanced-rest-client/polymd/compare/1.0.7...v1.0.8) (2016-09-30)
+
+
+### Update
+
+* Updated comands ([3f9216246ce1e9cacc9de2cbed636aa60908afd7](https://github.com/advanced-rest-client/polymd/commit/3f9216246ce1e9cacc9de2cbed636aa60908afd7))
+
+
+
 <a name="1.0.7"></a>
 ## [1.0.7](https://github.com/advanced-rest-client/polymd/compare/1.0.6...v1.0.7) (2016-09-10)
 

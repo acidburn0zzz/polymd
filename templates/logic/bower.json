@@ -1,7 +1,9 @@
 {
   "name": "ELEMENT-NAME",
   "description": "ELEMENT-DESCRIPTION",
-  "author": "ELEMENT-AUTHOR",
+  "authors": [
+    "ELEMENT-AUTHOR"
+  ],
   "keywords": [
     "web-components",
     "polymer"

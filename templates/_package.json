@@ -40,5 +40,8 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/REPOSITORY-NAME.git"
+  },
+  "bugs": {
+    "url": "https://github.com/REPOSITORY-NAME/issues"
   }
 }

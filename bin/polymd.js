@@ -32,7 +32,8 @@ program
   .option('-d, --skip-demo', 'Skip creation of the demo page.', false)
   .option('--arc', 'Special switch to create a component for Advanced REST Client.', false)
   .option('-n, --no-deps', 'Do not install dependencies.', false)
-  .option('--debug', 'Don\'t use it.', false)
+  .option('--no-travis', 'Do not add .travis.yaml file')
+  .option('--no-dependencyci', 'Do not add dependencyci.yml file')
 
 .action((componentName) => {
   if (!componentName) {

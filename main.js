@@ -83,6 +83,12 @@ class PolyMd {
     if (o.noDeps) {
       this.noDeps = true;
     }
+    if (o.noDependencyci) {
+      this.noDependencyci = true;
+    }
+    if (o.noTravis) {
+      this.noTravis = true;
+    }
   }
 
   throwError(type, param) {
@@ -117,10 +123,15 @@ class PolyMd {
     if (!this.target) {
       throw new Error('Unknown target. Set argument first.');
     }
-
-    //	OR CC-BY-4.0
+    var ignore = [];
+    if (this.noTravis) {
+      ignore[ignore.length] = '.travis.yml';
+    }
+    if (this.noDependencyci) {
+      ignore[ignore.length] = 'dependencyci.yml';
+    }
     // Copy helper files.
-    this.copy(this.selfPath('templates/helpers'), path.join(this.target, './'));
+    this.copy(this.selfPath('templates/helpers'), path.join(this.target, './'), ignore);
     // Component's metadata and logic.
     this.copy(this.selfPath('templates/logic'), path.join(this.target, './'));
     this.copy(this.selfPath('templates/_package.json'), path.join(this.target, './package.json'));
@@ -155,9 +166,17 @@ class PolyMd {
     console.log('  Try npm run serve to see the component\'s documentation.');
     console.log('');
   }
-
-  copy(src, dest) {
-    // console.log(`Copying file from ${src} to ${dest}`);
+  /**
+   * Copy file from one location to another. It can be either file or directory.
+   * If it's directory then it copy files only to the `dest` location without the folder.
+   *
+   * @param {String} src A source file or directory. The directory won't be copied - only
+   * its content
+   * @param {String} dest A plece where to move files
+   * @param {Array<String>?} exclude Files to ignore during copy.
+   */
+  copy(src, dest, exclude) {
+    exclude = exclude || [];
     var stats;
     try {
       stats = fs.statSync(src);
@@ -187,6 +206,9 @@ class PolyMd {
 
       }
       fs.readdirSync(src).forEach((file) => {
+        if (exclude.indexOf(file) !== -1) {
+          return;
+        }
         this.copy(path.join(src, file),
                         path.join(dest, file));
       });
@@ -211,6 +233,7 @@ class PolyMd {
     if (this.isArcComponent) {
       let pkg = JSON.parse(fs.readFileSync(path.join(this.target, './package.json'), 'utf8'));
       pkg.license += ' OR CC-BY-4.0';
+      pkg.bugs.email = 'arc@mulesoft.com';
       fs.writeFileSync(path.join(this.target, './package.json'), JSON.stringify(pkg, null, 2));
     }
   }
@@ -233,21 +256,38 @@ class PolyMd {
 
   deps() {
     if (this.noDeps) {
-      return;
+      return Promise.resolve();
     }
-    var opts = {
-      cwd: this.target
-    };
-    console.log('Instaling dependencies: npm run deps');
+    return this.exec('npm run deps', this.target);
+  }
+  /**
+   * Execute shell command
+   *
+   * @param {String} cmd Command to execute
+   * @param {String?} dir A directoy where to execute the command.
+   * @return {Promise} Promise resolves itself if the command was executed successfully and
+   * rejects it there was an error.
+   */
+  exec(cmd, dir) {
+    dir = dir || undefined;
     return new Promise((resolve, reject) => {
-      exec('npm run deps', opts, (err) => {
+      var opts = {};
+      if (dir) {
+        opts.cwd = dir;
+      }
+      exec(cmd, opts, (err, stdout, stderr) => {
         if (err) {
-          return reject(err);
+          let currentDir = process.cwd();
+          if (opts.cwd) {
+            currentDir = opts.cwd;
+          }
+          reject(new Error('Unable to execute command: ' + err.message +
+            '. Was in dir: ' + currentDir + '. stdout: ', stdout, '. stderr: ', stderr));
+          return;
         }
-        resolve();
+        resolve(stdout);
       });
     });
-
   }
 }
 exports.PolyMd = PolyMd;

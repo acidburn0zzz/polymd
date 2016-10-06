@@ -22,20 +22,21 @@ program
     'env variable to automatically insert it into this field. If not, the `USER` variable will ' +
     'be used (if present).', '')
   .option('-v, --version <version>', 'Version of the component. Use semantic version standard.',
-    '1.0.0')
+    '0.0.1')
   .option('-r, --repository <repository>', 'The repository of the element. It should be only a ' +
     'user or organization name and component name will be appended. Use the `POLYMD_REPO` env ' +
     'variable to automate this.')
   .option('-p, --path <path>', 'Target directory where the element will be created. ' +
     'Current directory by default.')
-  .option('-s, --skip-test', 'Skip creation of the tests cases.', false)
-  .option('-d, --skip-demo', 'Skip creation of the demo page.', false)
-  .option('--arc', 'Special switch to create a component for Advanced REST Client.', false)
-  .option('-n, --no-deps', 'Do not install dependencies.', false)
+  .option('--arc', 'Special switch to create a component for Advanced REST Client.')
+  .option('--no-tests', 'Skip creation of the tests cases.')
+  .option('--no-demo', 'Skip creation of the demo page.')
+  .option('--no-deps', 'Do not install dependencies.')
   .option('--no-travis', 'Do not add .travis.yaml file')
   .option('--no-dependencyci', 'Do not add dependencyci.yml file')
 
 .action((componentName) => {
+  
   if (!componentName) {
     program.outputHelp();
     return;
@@ -44,13 +45,14 @@ program
   try {
     // program.path = process.cwd();
     let cli = new lib.PolyMd(componentName, program);
-    cli.run();
+    cli.run().then(() => {
+      process.exit(0);
+    });
   } catch (e) {
     console.error(e.message);
     program.outputHelp();
-    return;
+    process.exit(111);
   }
-
 });
 
 program.on('--help', () => {

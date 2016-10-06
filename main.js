@@ -30,14 +30,14 @@ class PolyMd {
   }
 
   get author() {
-    if (this.isArcComponent) {
-      return 'The Advanced REST client authors';
+    if (this.isArc) {
+      return 'The Advanced REST client authors <arc@mulesoft.com>';
     }
     return this._author || process.env.POLYMD_AUTHOR || process.env.USER || 'Add author here';
   }
 
   get repository() {
-    if (this.isArcComponent) {
+    if (this.isArc) {
       return `advanced-rest-client/${this.name}`;
     }
     if (this._repository) {
@@ -50,15 +50,6 @@ class PolyMd {
   }
 
   processArgs(o) {
-    if (o.skipTest) {
-      this.skipTest = true;
-    }
-    if (o.skipDemo) {
-      this.skipDemo = true;
-    }
-    if (o.debug) {
-      this.isDebug = true;
-    }
     if (o.description) {
       this.description = o.description;
     }
@@ -76,18 +67,23 @@ class PolyMd {
     } else {
       this.setTarget();
     }
-
     if (o.arc) {
-      this.isArcComponent = true;
+      this.isArc = true;
     }
-    if (o.noDeps) {
-      this.noDeps = true;
+    if (!o.tests) {
+      this.skipTest = true;
     }
-    if (o.noDependencyci) {
-      this.noDependencyci = true;
+    if (!o.demo) {
+      this.skipDemo = true;
     }
-    if (o.noTravis) {
-      this.noTravis = true;
+    if (!o.deps) {
+      this.skipDeps = true;
+    }
+    if (!o.dependencyci) {
+      this.skipDependencyci = true;
+    }
+    if (!o.travis) {
+      this.skipTravis = true;
     }
   }
 
@@ -109,9 +105,6 @@ class PolyMd {
   setTarget() {
     var dir = process.cwd();
     dir += '/' + this.name;
-    if (this.isDebug) {
-      dir += '/output';
-    }
     this.target = dir;
   }
 
@@ -124,10 +117,10 @@ class PolyMd {
       throw new Error('Unknown target. Set argument first.');
     }
     var ignore = [];
-    if (this.noTravis) {
+    if (this.skipTravis) {
       ignore[ignore.length] = '.travis.yml';
     }
-    if (this.noDependencyci) {
+    if (this.skipDependencyci) {
       ignore[ignore.length] = 'dependencyci.yml';
     }
     // Copy helper files.
@@ -148,12 +141,12 @@ class PolyMd {
     if (!this.skipDemo) {
       this.copy(this.selfPath('templates/demo'), path.join(this.target, './demo'));
     }
-    if (this.isArcComponent) {
+    if (this.isArc) {
       this.copy(this.selfPath('templates/license-file-arc.md'),
         path.join(this.target, './LICENSE.md'));
     }
     this.updateVariables();
-    this.deps().then(() => this._printEnd()).catch(() => {
+    return this.deps().then(() => this._printEnd()).catch(() => {
       console.log('Unable to install dependencies.');
       console.log('Run: \'npm run deps\' manually.');
       this._printEnd();
@@ -230,7 +223,7 @@ class PolyMd {
     if (!this.skipDemo) {
       this._updateVars(path.join(this.target, './demo/index.html'));
     }
-    if (this.isArcComponent) {
+    if (this.isArc) {
       let pkg = JSON.parse(fs.readFileSync(path.join(this.target, './package.json'), 'utf8'));
       pkg.license += ' OR CC-BY-4.0';
       pkg.bugs.email = 'arc@mulesoft.com';
@@ -242,7 +235,7 @@ class PolyMd {
     var name = this.name;
     var author = this.author;
     var description = this.description || 'Insert description here.';
-    var version = this.version || '1.0.0';
+    var version = this.version || '0.0.1';
     var repository = this.repository;
 
     var txt = fs.readFileSync(file, 'utf8');
@@ -255,9 +248,10 @@ class PolyMd {
   }
 
   deps() {
-    if (this.noDeps) {
+    if (this.skipDeps) {
       return Promise.resolve();
     }
+    console.log('Installing dependencies...');
     return this.exec('npm run deps', this.target);
   }
   /**

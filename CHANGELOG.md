@@ -1,3 +1,18 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/advanced-rest-client/polymd/compare/1.0.10...v1.1.1) (2016-10-06)
+
+
+### Breaking
+
+* Changed command options. All '--skip-*' options now are '--no-*' options. Removed debug option. The defaul version now will be '0.0.1' instead of '1.0.0' ([748ac240119284043627cce7c9f1a8da595199d8](https://github.com/advanced-rest-client/polymd/commit/748ac240119284043627cce7c9f1a8da595199d8))
+* Removed 'author' property from the bower file and added 'authors' array as defined in bower spec. ([92c8133ff79639333d468c41a4ac3f1445856261](https://github.com/advanced-rest-client/polymd/commit/92c8133ff79639333d468c41a4ac3f1445856261))
+
+### New
+
+* added dependencyci.yml file and added option to the command to pass this and travis file. Also added a 'bugs' field into the package.json file and arc components will automatically get email address to the bug property ([10aa78b44b5c356260e0f23a9b3b9b345303c99d](https://github.com/advanced-rest-client/polymd/commit/10aa78b44b5c356260e0f23a9b3b9b345303c99d))
+
+
+
 <a name="1.0.10"></a>
 ## [1.0.10](https://github.com/advanced-rest-client/polymd/compare/1.0.9...v1.0.10) (2016-09-30)
 

@@ -1,6 +1,6 @@
 {
   "name": "polymd",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A module to create a Polymer component from the template",
   "main": "main.js",
   "scripts": {

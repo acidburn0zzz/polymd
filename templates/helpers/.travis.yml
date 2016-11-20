@@ -3,19 +3,20 @@ sudo: required
 dist: trusty
 node_js: stable
 before_script:
-- npm install -g bower polylint web-component-tester
-- bower install
+- npm install --silent bower polymer-cli
+- bower install --silent
 addons:
-  firefox: '46.0'
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
   sauce_connect: true
 script:
-- polylint
-- xvfb-run wct
+- ./node_modules/.bin/polymer lint ELEMENT-NAME.html
+- ./node_modules/.bin/polymer test --plugin sauce --job-name "ELEMENT-NAME:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}
 cache:
   directories:
   - bower_components
+  - node_modules
+branches:
+  only:
+    - stage
+    - develop
+after_success:
+  - node tasks/ci.js

@@ -79,9 +79,6 @@ class PolyMd {
     if (!o.deps) {
       this.skipDeps = true;
     }
-    if (!o.dependencyci) {
-      this.skipDependencyci = true;
-    }
     if (!o.travis) {
       this.skipTravis = true;
     }
@@ -119,9 +116,6 @@ class PolyMd {
     var ignore = [];
     if (this.skipTravis) {
       ignore[ignore.length] = '.travis.yml';
-    }
-    if (this.skipDependencyci) {
-      ignore[ignore.length] = 'dependencyci.yml';
     }
     // Copy helper files.
     this.copy(this.selfPath('templates/helpers'), path.join(this.target, './'), ignore);
@@ -178,10 +172,10 @@ class PolyMd {
     }
 
     if (stats.isFile()) {
-
       try {
         let ds = fs.statSync(dest);
         if (ds.isDirectory()) {
+          console.log('Will not copy directory...');
           return;
         } else if (ds.isFile()) {
           fs.unlinkSync(dest);
@@ -189,7 +183,7 @@ class PolyMd {
       } catch (e) {
 
       }
-
+      console.log('  Writing file ' + dest);
       fs.writeFileSync(dest, fs.readFileSync(src));
       return true;
     } else if (stats.isDirectory()) {
@@ -200,6 +194,7 @@ class PolyMd {
       }
       fs.readdirSync(src).forEach((file) => {
         if (exclude.indexOf(file) !== -1) {
+          console.log('Dropping file ' + file + ' as ignored.');
           return;
         }
         this.copy(path.join(src, file),
@@ -229,6 +224,10 @@ class PolyMd {
       pkg.license += ' OR CC-BY-4.0';
       pkg.bugs.email = 'arc@mulesoft.com';
       fs.writeFileSync(path.join(this.target, './package.json'), JSON.stringify(pkg, null, 2));
+
+      let bower = JSON.parse(fs.readFileSync(path.join(this.target, './bower.json'), 'utf8'));
+      bower.license += ' OR CC-BY-4.0';
+      fs.writeFileSync(path.join(this.target, './bower.json'), JSON.stringify(bower, null, 2));
     }
   }
 

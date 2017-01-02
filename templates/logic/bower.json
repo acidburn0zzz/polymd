@@ -1,6 +1,8 @@
 {
   "name": "ELEMENT-NAME",
   "description": "ELEMENT-DESCRIPTION",
+  "version": "ELEMENT-VERSION",
+  "license": "Apache-2.0",
   "authors": [
     "ELEMENT-AUTHOR"
   ],
@@ -35,6 +37,5 @@
     "bower_components",
     "test",
     "tasks"
-  ],
-  "version": "ELEMENT-VERSION"
+  ]
 }

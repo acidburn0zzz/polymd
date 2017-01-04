@@ -1,3 +1,13 @@
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/advanced-rest-client/polymd/compare/1.2.3...v1.2.4) (2017-01-04)
+
+
+### Fix
+
+* Fixed travis commands ([3929ae37e16bd7214a2ba4d591917a8de361f1d6](https://github.com/advanced-rest-client/polymd/commit/3929ae37e16bd7214a2ba4d591917a8de361f1d6))
+
+
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/advanced-rest-client/polymd/compare/1.2.2...v1.2.3) (2017-01-02)
 

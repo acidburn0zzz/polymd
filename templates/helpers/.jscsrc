@@ -6,10 +6,10 @@
   "excludeFiles": ["node_modules/**"],
   "jsDoc": {
     "checkAnnotations": {
-        "preset": "jsdoc3",
-        "extra": {
-            "polymerBehavior": true
-        }
+      "preset": "jsdoc3",
+      "extra": {
+        "polymerBehavior": true
+      }
     }
   }
 }

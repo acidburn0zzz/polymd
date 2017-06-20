@@ -1,3 +1,9 @@
+<a name="1.2.6"></a>
+## [1.2.6](https://github.com/advanced-rest-client/polymd/compare/1.2.4...v1.2.6) (2017-06-20)
+
+
+
+
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/advanced-rest-client/polymd/compare/1.2.3...v1.2.4) (2017-01-04)
 

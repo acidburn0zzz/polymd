@@ -1,3 +1,13 @@
+<a name="1.2.8"></a>
+## [1.2.8](https://github.com/advanced-rest-client/polymd/compare/1.2.4...v1.2.8) (2017-06-21)
+
+
+### Fix
+
+* Fixed JSON syntax in bower.json file ([d18df7e896273a6f4cd40bc9273864fd6972ce5a](https://github.com/advanced-rest-client/polymd/commit/d18df7e896273a6f4cd40bc9273864fd6972ce5a))
+
+
+
 <a name="1.2.7"></a>
 ## [1.2.7](https://github.com/advanced-rest-client/polymd/compare/1.2.6...v1.2.7) (2017-06-20)
 

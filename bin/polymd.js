@@ -22,7 +22,7 @@ program
     'env variable to automatically insert it into this field. If not, the `USER` variable will ' +
     'be used (if present).', '')
   .option('-v, --version <version>', 'Version of the component. Use semantic version standard.',
-    '0.0.1')
+    '0.1.0')
   .option('-r, --repository <repository>', 'The repository of the element. It should be only a ' +
     'user or organization name and component name will be appended. Use the `POLYMD_REPO` env ' +
     'variable to automate this.')

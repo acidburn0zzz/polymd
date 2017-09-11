@@ -1,3 +1,13 @@
+<a name="1.2.9"></a>
+## [1.2.9](https://github.com/advanced-rest-client/polymd/compare/1.2.8...1.2.9) (2017-09-11)
+
+
+### Update
+
+* Updated templates ([e5683f0c1fa370973f178287d3069034f7bd7be3](https://github.com/advanced-rest-client/polymd/commit/e5683f0c1fa370973f178287d3069034f7bd7be3))
+
+
+
 <a name="1.2.8"></a>
 ## [1.2.8](https://github.com/advanced-rest-client/polymd/compare/1.2.4...v1.2.8) (2017-06-21)
 
